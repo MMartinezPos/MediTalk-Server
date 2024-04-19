@@ -1,23 +1,27 @@
-# Use an official Python runtime as a parent image
+# Use Python 3.11.6 as the base image
 FROM python:3.11.6-slim
 
-# Install necessary system dependencies
-RUN apt-get update && apt-get install -y cmake portaudio19-dev
-
-# Set the working directory to /app
+# Set the working directory in the Docker image
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Install necessary system dependencies
+RUN apt-get update && apt-get install -y \
+    cmake \
+    pkg-config \
+    portaudio19-dev \
+    git
 
-# Install any needed packages specified in requirements.txt
-RUN pip install --upgrade pip && pip install -r requirements.txt
+# Upgrade pip to the latest version
+RUN pip install --upgrade pip
 
-# Make port 8000 available to the world outside this container
-EXPOSE 8000
+# Copy only the requirements file, to cache the pip install step separately
+COPY requirements.txt .
 
-# Define environment variable
-ENV NAME World
+# Install Python dependencies
+RUN pip install -r requirements.txt
 
-# Run app.py when the container launches
+# Copy the rest of the application's code
+COPY . .
+
+# Command to run on container start
 CMD ["python", "app.py"]

@@ -123,5 +123,5 @@ virtualenv==20.25.0
 Werkzeug==3.0.1
 xattr==0.10.1
 zipp==3.17.0
-sentencepiece==0.1.96
+sentencepiece==0.2.0
 gunicorn==22.0.0

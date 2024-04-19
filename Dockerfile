@@ -9,7 +9,9 @@ RUN apt-get update && apt-get install -y \
     cmake \
     pkg-config \
     portaudio19-dev \
-    git
+    git \
+    ffmpeg 
+
 
 # Upgrade pip to the latest version
 RUN pip install --upgrade pip
